@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 09:11:31 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 11:55:49 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 15:44:39 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ char	*fill_save(int fd, char *saved)
 {
 	char	*buf;
 	char	*tmp;
+	size_t	len;
+	size_t	cap;
 	ssize_t	n;
 
+	len = ft_strlen(saved);
+	cap = len + 1;
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (free(saved), NULL);
@@ -30,11 +34,24 @@ char	*fill_save(int fd, char *saved)
 		if (n < 0)
 			return (free(buf), free(saved), NULL);
 		buf[n] = '\0';
+		if (len + n + 1 > cap)
+		{
+			cap = (len + n + 1) * 2;
+			tmp = realloc(saved, cap);
+			if (!tmp)
+				return (free(buf), free(saved), NULL);
+			saved = tmp;
+		}
+		ft_memcpy(saved + len, buf, n);
+		len += n;
+		saved[len] = '\0';
+		/*
 		tmp = ft_strjoin(saved, buf);
 		free(saved);
 		saved = tmp;
 		if (!saved)
 			break ;
+		*/
 	}
 	free(buf);
 	return (saved);

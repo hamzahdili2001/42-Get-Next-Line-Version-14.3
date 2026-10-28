@@ -6,12 +6,55 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:34:21 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 12:05:00 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 15:44:57 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+char	*fill_save(int fd, char *saved)
+{
+	char	*buf;
+	char	*tmp;
+	size_t	len;
+	size_t	cap;
+	ssize_t	n;
+
+	len = ft_strlen(saved);
+	cap = len + 1;
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (free(saved), NULL);
+	n = 1;
+	while (n > 0 && saved[l_count(saved)] != '\n')
+	{
+		n = read(fd, buf, BUFFER_SIZE);
+		if (n < 0)
+			return (free(buf), free(saved), NULL);
+		buf[n] = '\0';
+		if (len + n + 1 > cap)
+		{
+			cap = (len + n + 1) * 2;
+			tmp = realloc(saved, cap);
+			if (!tmp)
+				return (free(buf), free(saved), NULL);
+			saved = tmp;
+		}
+		ft_memcpy(saved + len, buf, n);
+		len += n;
+		saved[len] = '\0';
+		/*
+		tmp = ft_strjoin(saved, buf);
+		free(saved);
+		saved = tmp;
+		if (!saved)
+			break ;
+		*/
+	}
+	free(buf);
+	return (saved);
+}
+/*
 static char	*fill_save(int fd, char *saved)
 {
 	char	*buf;
@@ -37,7 +80,7 @@ static char	*fill_save(int fd, char *saved)
 	free(buf);
 	return (saved);
 }
-
+*/
 static char	*extract_line(char *saved)
 {
 	size_t	len;

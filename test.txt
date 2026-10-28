@@ -1,4 +1,0 @@
-this is test 1 of line 1.
-this is test 1 of line 2.
-this is test 1 of line 3.
-this is test 1 of line 4.

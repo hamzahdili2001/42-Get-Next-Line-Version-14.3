@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 14:09:40 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/26 15:03:23 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 15:41:14 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,25 @@ char	*ft_substr(char *s, size_t start, size_t len)
 	return (sub);
 }
 
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*d;
+	const unsigned char	*s;
+	size_t				i;
+
+	if (!dest && !src)
+		return (NULL);
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
+}
+/*
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*joined;
@@ -81,6 +100,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	*ptr = '\0';
 	return (joined);
 }
+*/
 
 size_t	l_count(char *buffer)
 {

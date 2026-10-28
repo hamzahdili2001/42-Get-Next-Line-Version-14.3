@@ -6,10 +6,11 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 15:04:06 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 12:12:50 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 12:59:00 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+#include <fcntl.h>
 
 int	callnextline(int fd)
 {
@@ -27,9 +28,11 @@ int	main(void)
 {
 	int	fd;
 
-	fd = open("big_line_no_nl", O_RDONLY);
+	fd = open("test.txt", O_WRONLY);
 	if (fd == -1)
 		return (1);
+	callnextline(fd);
+	callnextline(fd);
 	callnextline(fd);
 	return (0);
 }
