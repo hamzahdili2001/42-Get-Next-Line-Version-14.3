@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:34:21 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 11:06:20 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 12:05:00 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*fill_save(int fd, char *saved)
 	if (!buf)
 		return (free(saved), NULL);
 	n = 1;
-	while (n > 0 && saved[l_count(buf)] != '\n')
+	while (n > 0 && saved[l_count(saved)] != '\n')
 	{
 		n = read(fd, buf, BUFFER_SIZE);
 		if (n < 0)

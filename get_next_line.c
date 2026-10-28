@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 09:11:31 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/26 15:05:38 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/28 11:55:49 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*get_next_line(int fd)
 	if (!saved)
 		return (NULL);
 	saved = fill_save(fd, saved);
-	if (!*saved)
+	if (!saved || !*saved)
 	{
 		free(saved);
 		saved = NULL;
