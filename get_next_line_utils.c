@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 14:09:40 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 15:41:14 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 12:09:29 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,48 +59,24 @@ char	*ft_substr(char *s, size_t start, size_t len)
 	return (sub);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+char	*grow(char *s, size_t len, size_t *cap)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
+	char	*new;
+	size_t	i;
 
-	if (!dest && !src)
-		return (NULL);
-	d = (unsigned char *)dest;
-	s = (const unsigned char *)src;
+	*cap = 2 * len + BUFFER_SIZE + 1;
+	new = malloc(*cap);
+	if (!new)
+		return (free(s), NULL);
 	i = 0;
-	while (i < n)
+	while (i <= len)
 	{
-		d[i] = s[i];
+		new[i] = s[i];
 		i++;
 	}
-	return (dest);
+	free(s);
+	return (new);
 }
-/*
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*joined;
-	char	*ptr;
-	size_t	s1len;
-	size_t	s2len;
-
-	if (!s1 || !s2)
-		return (NULL);
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	joined = malloc(s1len + s2len + 1);
-	if (!joined)
-		return (NULL);
-	ptr = joined;
-	while (*s1)
-		*ptr++ = *s1++;
-	while (*s2)
-		*ptr++ = *s2++;
-	*ptr = '\0';
-	return (joined);
-}
-*/
 
 size_t	l_count(char *buffer)
 {

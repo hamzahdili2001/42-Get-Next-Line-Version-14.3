@@ -6,13 +6,14 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 15:04:06 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 12:59:00 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 12:17:15 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 #include <fcntl.h>
+#include <stdio.h>
 
-int	callnextline(int fd)
+static int	callnextline(int fd)
 {
 	char	*line;
 
@@ -24,15 +25,17 @@ int	callnextline(int fd)
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	int	fd;
 
-	fd = open("test.txt", O_WRONLY);
+	if (ac != 2)
+		return (1);
+	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return (1);
-	callnextline(fd);
-	callnextline(fd);
-	callnextline(fd);
+	while (!callnextline(fd))
+		;
+	close(fd);
 	return (0);
 }

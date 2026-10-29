@@ -6,81 +6,40 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:34:21 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 15:44:57 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 12:11:27 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*fill_save(int fd, char *saved)
+static char	*fill_save(int fd, char *saved)
 {
-	char	*buf;
-	char	*tmp;
 	size_t	len;
 	size_t	cap;
 	ssize_t	n;
 
+	if (saved[l_count(saved)] == '\n')
+		return (saved);
 	len = ft_strlen(saved);
 	cap = len + 1;
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (free(saved), NULL);
 	n = 1;
-	while (n > 0 && saved[l_count(saved)] != '\n')
+	while (n > 0)
 	{
-		n = read(fd, buf, BUFFER_SIZE);
+		if (cap - len - 1 < BUFFER_SIZE)
+			saved = grow(saved, len, &cap);
+		if (!saved)
+			return (NULL);
+		n = read(fd, saved + len, BUFFER_SIZE);
 		if (n < 0)
-			return (free(buf), free(saved), NULL);
-		buf[n] = '\0';
-		if (len + n + 1 > cap)
-		{
-			cap = (len + n + 1) * 2;
-			tmp = realloc(saved, cap);
-			if (!tmp)
-				return (free(buf), free(saved), NULL);
-			saved = tmp;
-		}
-		ft_memcpy(saved + len, buf, n);
+			return (free(saved), NULL);
+		saved[len + n] = '\0';
+		if (saved[len + l_count(saved + len)] == '\n')
+			break ;
 		len += n;
-		saved[len] = '\0';
-		/*
-		tmp = ft_strjoin(saved, buf);
-		free(saved);
-		saved = tmp;
-		if (!saved)
-			break ;
-		*/
 	}
-	free(buf);
 	return (saved);
 }
-/*
-static char	*fill_save(int fd, char *saved)
-{
-	char	*buf;
-	char	*tmp;
-	ssize_t	n;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (free(saved), NULL);
-	n = 1;
-	while (n > 0 && saved[l_count(saved)] != '\n')
-	{
-		n = read(fd, buf, BUFFER_SIZE);
-		if (n < 0)
-			return (free(buf), free(saved), NULL);
-		buf[n] = '\0';
-		tmp = ft_strjoin(saved, buf);
-		free(saved);
-		saved = tmp;
-		if (!saved)
-			break ;
-	}
-	free(buf);
-	return (saved);
-}
-*/
 static char	*extract_line(char *saved)
 {
 	size_t	len;

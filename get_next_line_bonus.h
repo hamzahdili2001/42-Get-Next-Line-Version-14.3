@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:35:57 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 15:33:14 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 12:13:18 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 #  define BUFFER_SIZE 30720
 # endif
 
+char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 size_t	l_count(char *buffer);
 char	*ft_substr(char *s, size_t start, size_t len);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*ft_strjoin(char *s1, char *s2);
+char	*grow(char *s, size_t len, size_t *cap);
 #endif

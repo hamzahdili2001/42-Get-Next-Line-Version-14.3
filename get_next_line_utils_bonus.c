@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:46:02 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/28 15:41:58 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 11:12:14 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t	l_count(char *buffer)
 	return (size);
 }
 
-static size_t	guard(size_t len, char *s, size_t start)
+static size_t	guard(char *s, size_t start, size_t len)
 {
 	size_t	count;
 	size_t	slen;
@@ -50,11 +50,13 @@ static size_t	guard(size_t len, char *s, size_t start)
 
 char	*ft_substr(char *s, size_t start, size_t len)
 {
-	char	*sub;
 	size_t	count;
+	char	*sub;
 	size_t	i;
 
-	count = guard(len, s, start);
+	if (!s)
+		return (NULL);
+	count = guard(s, start, len);
 	sub = malloc(count + 1);
 	if (!sub)
 		return (NULL);
@@ -68,45 +70,21 @@ char	*ft_substr(char *s, size_t start, size_t len)
 	return (sub);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+char	*grow(char *s, size_t len, size_t *cap)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
-
-	if (!dest && !src)
-		return (NULL);
-	d = (unsigned char *)dest;
-	s = (const unsigned char *)src;
-	i = 0;
-	while (i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-	return (dest);
-}
-/*
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*joined;
-	size_t	s1len;
-	size_t	s2len;
+	char	*new;
 	size_t	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	joined = malloc(s1len + s2len + 1);
-	if (!joined)
-		return (NULL);
+	*cap = 2 * len + BUFFER_SIZE + 1;
+	new = malloc(*cap);
+	if (!new)
+		return (free(s), NULL);
 	i = 0;
-	while (*s1)
-		joined[i++] = *s1++;
-	while (*s2)
-		joined[i++] = *s2++;
-	joined[i] = '\0';
-	return (joined);
+	while (i <= len)
+	{
+		new[i] = s[i];
+		i++;
+	}
+	free(s);
+	return (new);
 }
-*/
