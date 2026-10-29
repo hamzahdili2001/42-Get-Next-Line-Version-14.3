@@ -6,7 +6,7 @@
 /*   By: hhdili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 09:11:31 by hhdili            #+#    #+#             */
-/*   Updated: 2026/10/29 12:20:12 by hhdili           ###   ########.fr       */
+/*   Updated: 2026/10/29 17:39:08 by hhdili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	line = extract_line(saved);
+	if (!line)
+		return (NULL);
 	saved = trim_saved(saved);
 	return (line);
 }
